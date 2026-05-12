@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   selector: 'app-product-management',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './product-management.component.html'
+  templateUrl: './product-management.html'
 })
 export class ProductManagementComponent {
   private fb = inject(FormBuilder);
@@ -52,7 +52,6 @@ export class ProductManagementComponent {
       this.productsService.create(this.productForm.value).subscribe({
         next: () => {
           alert('Товар успешно создан!');
-          this.router.navigate(['/products']);
         },
         error: (err) => console.error('Ошибка при создании:', err)
       });
