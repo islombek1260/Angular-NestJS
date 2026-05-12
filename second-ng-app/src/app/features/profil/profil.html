@@ -1,0 +1,125 @@
+<div class="min-h-screen bg-gray-50 dark:bg-gray-950 py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+  <div class="max-w-5xl mx-auto">
+
+    <!-- КАРТОЧКА ПРОФИЛЯ -->
+    <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden mb-8">
+      <!-- Декоративный фон шапки -->
+      <div class="h-32 bg-gradient-to-r from-indigo-600 to-violet-600 relative">
+        <!-- КНОПКА LOGOUT (в верхнем углу) -->
+        <button (click)="onLogout()"
+          class="absolute top-4 right-4 flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-xl text-sm font-medium transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          Logout
+        </button>
+      </div>
+
+      <div class="px-8 pb-8">
+        <div class="relative flex flex-col sm:flex-row justify-between items-end -mt-12 gap-4">
+          <!-- Аватар -->
+          <div class="p-1.5 bg-white dark:bg-gray-900 rounded-full shadow-lg">
+            <img [src]="userAvatar" class="h-32 w-32 rounded-full object-cover border-4 border-transparent">
+          </div>
+
+          <!-- Группа кнопок управления -->
+          <div class="flex flex-wrap gap-3">
+            <!-- Удалить профиль (Опасное действие) -->
+            <button (click)="onDeleteAccount()"
+              class="flex items-center gap-2 px-6 py-2.5 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/40 rounded-xl text-sm font-bold transition-all border border-red-100 dark:border-red-900/30">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              Delete Profile
+            </button>
+
+            <!-- Редактировать -->
+            <button (click)="toggleEditProfileModal()"
+              class="flex items-center gap-2 px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white rounded-xl text-sm font-bold transition-all shadow-md">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
+              Edit Profile
+            </button>
+          </div>
+        </div>
+
+        <!-- Основная информация -->
+        <div class="mt-6">
+          <h1 class="text-3xl font-black text-gray-900 dark:text-white tracking-tight">
+            {{ userInfo?.userName || 'Loading...' }}
+          </h1>
+          <p class="text-gray-500 dark:text-gray-400 font-medium flex items-center gap-2 mt-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            {{ userInfo?.email }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Сетка продуктов -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Карточка продукта (цикл) -->
+      <div *ngFor="let product of userInfo?.products"
+        class="group bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 p-4 hover:shadow-xl hover:border-indigo-200 dark:hover:border-indigo-900 transition-all duration-300">
+
+        <div class="aspect-square rounded-xl bg-gray-100 dark:bg-gray-800 mb-4 overflow-hidden">
+          <!-- Если у продукта есть фото -->
+          <img If="product.image" [src]="product.image"
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+          <!-- Заглушка, если фото нет -->
+          <div If="!product.image" class="w-full h-full flex items-center justify-center text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+        </div>
+
+        <h3 class="font-bold text-gray-900 dark:text-white mb-1 group-hover:text-indigo-600 transition-colors">
+          {{ product.name }}
+        </h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mb-4">
+          {{ product.description }}
+        </p>
+
+        <div class="flex items-center justify-between mt-auto">
+          <span class="text-lg font-black text-indigo-600 dark:text-indigo-400">
+            ${{ product.price }}
+          </span>
+          <button class="p-2 text-gray-400 hover:text-red-500 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Если продуктов нет -->
+      <div *ngIf="userInfo?.products?.length === 0"
+        class="col-span-full py-20 text-center bg-white dark:bg-gray-900 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-800">
+        <p class="text-gray-500 dark:text-gray-400">You haven't added any products yet.</p>
+      </div>
+
+    </div>
+    
+  </div>
+</div>
+
+<!-- Модальное окно -->
+<app-edit-profile-modal *ngIf="isEditProfileModalOpen" (close)="isEditProfileModalOpen = false"
+  (updated)="onProfileUpdated()">
+</app-edit-profile-modal>

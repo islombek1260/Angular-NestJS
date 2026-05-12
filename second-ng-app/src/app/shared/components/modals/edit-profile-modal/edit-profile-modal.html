@@ -1,0 +1,70 @@
+<div class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+  <!-- Backdrop -->
+  <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-md transition-opacity" (click)="closeModal()"></div>
+
+  <!-- Modal Window -->
+  <div class="relative bg-white dark:bg-gray-900 w-full max-w-md rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden transform transition-all duration-300">
+    
+    <div class="h-1.5 bg-indigo-600 w-full"></div>
+
+    <div class="p-8">
+      <h2 class="text-2xl font-black text-gray-900 dark:text-white text-center mb-6">Edit Profile</h2>
+
+      <!-- Avatar Section -->
+      <div class="flex flex-col items-center gap-4 mb-8">
+        <div class="relative group">
+          <img [src]="displayAvatar" 
+               class="h-36 w-36 rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-2xl transition-all duration-300 group-hover:brightness-75">
+          
+          <!-- ПТИЧКА (Галочка) -->
+          <div *ngIf="selectedFile" 
+               class="absolute bottom-1 right-1 bg-green-500 p-2 rounded-full border-4 border-white dark:border-gray-900 shadow-lg z-20 animate-bounce">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+          </div>
+
+          <!-- Overlay Label for File Input -->
+          <label class="absolute inset-0 flex items-center justify-center rounded-full cursor-pointer">
+            <input type="file" class="hidden" (change)="onFileSelected($event)" accept="image/*">
+          </label>
+        </div>
+      </div>
+
+      <!-- Text Fields Form -->
+      <form [formGroup]="profileForm" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase mb-1 ml-1">Username</label>
+          <input formControlName="userName" type="text" placeholder="Your new name"
+            class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl focus:ring-2 focus:ring-indigo-500 dark:text-white outline-none transition-all">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase mb-1 ml-1">Email Address</label>
+          <input formControlName="email" type="email" placeholder="New email"
+            class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl focus:ring-2 focus:ring-indigo-500 dark:text-white outline-none transition-all">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase mb-1 ml-1">New Password</label>
+          <input formControlName="password" type="password" placeholder="New password"
+            class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-xl focus:ring-2 focus:ring-indigo-500 dark:text-white outline-none transition-all">
+        </div>
+      </form>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center justify-between gap-4 mt-10">
+        <button (click)="closeModal()" 
+          class="flex-1 px-4 py-3 text-sm font-bold text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white transition-colors text-center">
+          Cancel
+        </button>
+        
+        <button (click)="onSave()" 
+          [disabled]="profileForm.invalid && !selectedFile"
+          class="flex-1 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-2xl text-sm font-bold shadow-lg shadow-indigo-200 dark:shadow-none transition-all duration-200">
+          Save All
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

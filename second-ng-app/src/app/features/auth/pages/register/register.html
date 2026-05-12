@@ -1,0 +1,64 @@
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-white dark:bg-gray-950 transition-colors duration-300">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company"
+      class="mx-auto h-10 w-auto" />
+    <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">Create an account</h2>
+  </div>
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      
+      <div *ngIf="errorMessage" class="p-3 mb-4 text-sm text-red-700 bg-red-100 dark:bg-red-900/30 dark:text-red-400 rounded-lg border border-red-200 dark:border-red-800">
+        {{ errorMessage }}
+      </div>
+
+      <div>
+        <label for="fullname" class="block text-sm/6 font-medium text-gray-900 dark:text-gray-300">Full Name</label>
+        <div class="mt-2">
+          <input id="fullname" formControlName="fullname" type="text"
+            [class.outline-red-500]="registerForm.get('fullname')?.invalid && registerForm.get('fullname')?.touched"
+            class="block w-full rounded-md bg-white dark:bg-gray-900 px-3 py-1.5 text-base text-gray-900 dark:text-white outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-700 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 transition-colors" />
+        </div>
+      </div>
+
+      <div>
+        <label for="email" class="block text-sm/6 font-medium text-gray-900 dark:text-gray-300">Email address</label>
+        <div class="mt-2">
+          <input id="email" formControlName="email" type="email" autocomplete="email"
+            [class.outline-red-500]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+            class="block w-full rounded-md bg-white dark:bg-gray-900 px-3 py-1.5 text-base text-gray-900 dark:text-white outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-700 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 transition-colors" />
+        </div>
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm/6 font-medium text-gray-900 dark:text-gray-300">Password</label>
+        <div class="mt-2">
+          <input id="password" formControlName="password" type="password"
+            [class.outline-red-500]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+            class="block w-full rounded-md bg-white dark:bg-gray-900 px-3 py-1.5 text-base text-gray-900 dark:text-white outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-700 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 transition-colors" />
+        </div>
+      </div>
+
+      <div>
+        <label for="confirmPassword" class="block text-sm/6 font-medium text-gray-900 dark:text-gray-300">Confirm Password</label>
+        <div class="mt-2">
+          <input id="confirmPassword" formControlName="confirmPassword" type="password"
+            [class.outline-red-500]="(registerForm.get('confirmPassword')?.invalid || registerForm.errors?.['mismatch']) && registerForm.get('confirmPassword')?.touched"
+            class="block w-full rounded-md bg-white dark:bg-gray-900 px-3 py-1.5 text-base text-gray-900 dark:text-white outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-700 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 transition-colors" />
+        </div>
+      </div>
+
+      <div>
+        <button type="submit" [disabled]="registerForm.invalid"
+          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+          Sign Up
+        </button>
+      </div>
+    </form>
+
+    <p class="mt-10 text-center text-sm/6 text-gray-500 dark:text-gray-400">
+      Already have an account?
+      <a routerLink="/auth/login" class="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Sign In</a>
+    </p>
+  </div>
+</div>
